@@ -18,7 +18,8 @@ export default defineConfig({
 				scss: {
 					additionalData: `
 					@use "@styles/tools/_mixin.scss" as *;
-					@use "@styles/tools/_function.scss" as *;`,
+					@use "@styles/tools/_function.scss" as *;
+					@use "@styles/tools/_spacing.scss" as *;`,
 				},
 			},
 		},

@@ -85,5 +85,5 @@ input {
   border: 1px solid var(--color-border);
 
   // 12px 〜 14px
-  @include responsive-font-size(var(--font-size-xs), var(--font-size-s));
+  font-size: clamp-size(var(--font-size-xs), var(--font-size-s));
 }

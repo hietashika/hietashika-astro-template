@@ -23,6 +23,9 @@
 			],
 			"@icons/*": [
 				"./src/assets/icons/*"
+			],
+			"@utils/*": [
+				"./src/utils/*"
 			]
     }
   }

@@ -1,0 +1,42 @@
+---
+import { getSpacingClass, type SpaceSize } from "@utils/spacing";
+
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  horizontal?: boolean;
+  gap?: SpaceSize;
+}
+
+const { Element = "div", horizontal = false, gap }: Props = Astro.props;
+
+const classList = [
+  "stack",
+  // horizonralの有無によってクラス名を出し分ける
+  horizontal ? "horizontal" : "vertical",
+  // gapのクラスを追加
+  getSpacingClass("gap", gap),
+];
+---
+
+<Element class:list={classList}>
+  <slot />
+</Element>
+
+<style lang="scss">
+  @include element-base("stack") {
+    display: grid;
+    gap: var(--gap);
+  }
+
+  .vertical {
+    align-content: start;
+  }
+
+  .horizontal {
+    grid-auto-flow: column;
+    justify-content: start;
+  }
+
+  // スペーシングユーティリティを生成
+  @include generate-spacing-utilities("gap");
+</style>
