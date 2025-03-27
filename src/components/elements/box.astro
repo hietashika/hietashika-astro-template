@@ -1,7 +1,9 @@
 ---
+import { getPaddingClasses, type PaddingValue } from "@utils/spacing";
+
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
-  padding?: string;
+  padding?: PaddingValue;
   surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
 }
 
@@ -14,8 +16,10 @@ const {
 
 const classList = [
   "box",
-  // paddingのクラスを追加
+  // surfaceのクラスを追加
   `surface--${surface}`,
+  // paddingのクラスを追加
+  ...(padding ? getPaddingClasses(padding) : []),
 ];
 ---
 
@@ -25,6 +29,8 @@ const classList = [
 
 <style lang="scss">
   @include element-base("box") {
+    padding: var(--padding-top, 0) var(--padding-right, 0)
+      var(--padding-bottom, 0) var(--padding-left, 0);
     background-color: var(--background, transparent);
     color: var(--color-high, inherit);
     outline: 0.125rem solid transparent;
@@ -38,41 +44,26 @@ const classList = [
   .surface {
     &--primary {
       --background: var(--color-background-primary);
-      --color-text-high: var(--color-text-high);
-      --color-text-middle: var(--color-text-middle);
-      --color-text-low: var(--color-text-low);
-      --color-text-disabled: var(--color-text-disabled);
     }
 
     &--secondary {
       --background: var(--color-background-secondary);
-      --color-text-high: var(--color-text-high);
-      --color-text-middle: var(--color-text-middle);
-      --color-text-low: var(--color-text-low);
-      --color-text-disabled: var(--color-text-disabled);
     }
 
     &--tertiary {
       --background: var(--color-background-tertiary);
-      --color-text-high: var(--color-text-high);
-      --color-text-middle: var(--color-text-middle);
-      --color-text-low: var(--color-text-low);
-      --color-text-disabled: var(--color-text-disabled);
     }
 
     &--quaternary {
       --background: var(--color-background-quaternary);
-      --color-text-high: var(--color-text-high);
-      --color-text-middle: var(--color-text-middle);
-      --color-text-low: var(--color-text-low);
-      --color-text-disabled: var(--color-text-disabled);
     }
 
     &--accent {
       --background: var(--color-background-accent);
       --color-text-high: var(--color-text-primary);
-      --color-text-middle: var(--color-text-primary);
-      --color-text-low: var(--color-text-primary);
     }
   }
+
+  // パディングユーティリティを生成
+  @include generate-padding-utilities;
 </style>

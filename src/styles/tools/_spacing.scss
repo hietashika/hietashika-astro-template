@@ -51,4 +51,11 @@
   .#{$prefix}--7 {
     --#{$prefix}: var(--space-5xl);
   }
+}
+
+// パディング方向ごとのユーティリティクラスを生成
+@mixin generate-padding-utilities {
+  @each $direction in ("top", "right", "bottom", "left") {
+    @include generate-spacing-utilities("padding-#{$direction}");
+  }
 } 
