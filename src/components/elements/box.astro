@@ -1,0 +1,78 @@
+---
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  padding?: string;
+  surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
+}
+
+const {
+  Element = "div",
+  padding,
+  surface = "primary",
+  ...rest
+}: Props = Astro.props;
+
+const classList = [
+  "box",
+  // paddingのクラスを追加
+  `surface--${surface}`,
+];
+---
+
+<Element class:list={classList} {...rest}>
+  <slot />
+</Element>
+
+<style lang="scss">
+  @include element-base("box") {
+    background-color: var(--background, transparent);
+    color: var(--color-high, inherit);
+    outline: 0.125rem solid transparent;
+    outline-offset: -0.125rem;
+
+    > :global(*) {
+      color: inherit;
+    }
+  }
+
+  .surface {
+    &--primary {
+      --background: var(--color-background-primary);
+      --color-text-high: var(--color-text-high);
+      --color-text-middle: var(--color-text-middle);
+      --color-text-low: var(--color-text-low);
+      --color-text-disabled: var(--color-text-disabled);
+    }
+
+    &--secondary {
+      --background: var(--color-background-secondary);
+      --color-text-high: var(--color-text-high);
+      --color-text-middle: var(--color-text-middle);
+      --color-text-low: var(--color-text-low);
+      --color-text-disabled: var(--color-text-disabled);
+    }
+
+    &--tertiary {
+      --background: var(--color-background-tertiary);
+      --color-text-high: var(--color-text-high);
+      --color-text-middle: var(--color-text-middle);
+      --color-text-low: var(--color-text-low);
+      --color-text-disabled: var(--color-text-disabled);
+    }
+
+    &--quaternary {
+      --background: var(--color-background-quaternary);
+      --color-text-high: var(--color-text-high);
+      --color-text-middle: var(--color-text-middle);
+      --color-text-low: var(--color-text-low);
+      --color-text-disabled: var(--color-text-disabled);
+    }
+
+    &--accent {
+      --background: var(--color-background-accent);
+      --color-text-high: var(--color-text-primary);
+      --color-text-middle: var(--color-text-primary);
+      --color-text-low: var(--color-text-primary);
+    }
+  }
+</style>

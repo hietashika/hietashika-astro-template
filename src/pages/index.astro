@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Stack from "@elements/stack.astro";
+import Box from "@/components/elements/box.astro";
 ---
 
 <Layout pageTitle="Home">
@@ -9,11 +10,14 @@ import Stack from "@elements/stack.astro";
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
     </p>
-    <Stack gap={1} horizontal>
-      <h2>Heading 2</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-      </p>
-    </Stack>
+    <Box surface="accent">
+      <Stack gap={1} horizontal>
+        <h2>Heading 2</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+          quos.
+        </p>
+      </Stack>
+    </Box>
   </Stack>
 </Layout>
