@@ -1,0 +1,88 @@
+---
+import { getGapClasses, type GapValue } from "@utils/spacing";
+
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  gap?: GapValue;
+
+  // 配置
+  align?: "end" | "center";
+  justify?: "end" | "center" | "between" | "around";
+  content?: "end" | "center";
+
+  // ユーティリティ
+  [key: string]: unknown;
+}
+
+const { Element = "div", gap, align, justify, content } = Astro.props as Props;
+
+const classList = [
+  "cluster",
+  ...getGapClasses(gap),
+  align ? `align--${align}` : "",
+  justify ? `justify--${justify}` : "",
+  content ? `content--${content}` : "",
+];
+---
+
+<Element class:list={classList}>
+  <slot />
+</Element>
+
+<style lang="scss">
+  @include element-base("cluster") {
+    // デフォルト
+    --gap: var(--space-xs);
+    --row-gap: var(--gap);
+    --column-gap: var(--gap);
+    --content: flex-start;
+    --justify: flex-start;
+    --align: flex-start;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--row-gap) var(--column-gap);
+    place-content: var(--content) var(--justify);
+    align-items: var(--align);
+  }
+
+  @include generate-gap-utilities;
+
+  .content {
+    &--end {
+      --content: flex-end;
+    }
+
+    &--center {
+      --content: center;
+    }
+  }
+
+  .align {
+    &--end {
+      --align: flex-end;
+    }
+
+    &--center {
+      --align: center;
+    }
+  }
+
+  .justify {
+    &--end {
+      --justify: flex-end;
+    }
+
+    &--center {
+      --justify: center;
+    }
+
+    &--between {
+      --justify: space-between;
+    }
+
+    &--around {
+      --justify: space-around;
+    }
+  }
+</style>

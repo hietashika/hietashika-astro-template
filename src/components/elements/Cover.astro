@@ -1,0 +1,110 @@
+---
+import {
+  getPaddingClasses,
+  getGapClasses,
+  type PaddingValue,
+  type GapValue,
+} from "@utils/spacing";
+import { Schema } from "astro:schema";
+
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  padding?: PaddingValue;
+  gap?: GapValue;
+  minHeight?: number;
+
+  // ユーティリティ
+  [key: string]: unknown;
+}
+
+const {
+  Element = "div",
+  padding = 0,
+  gap,
+  minHeight,
+  ...rest
+} = Astro.props as Props;
+
+const classList = [
+  "cover",
+  ...getPaddingClasses(padding),
+  ...getGapClasses(gap),
+  ...(minHeight ? [`minHeight--${minHeight}`] : []),
+];
+
+// スロットの中身を確認するためのヘルパー関数
+const hasSlotContent = (slotName: string | null) => {
+  // デフォルトスロット
+  if (slotName === null) {
+    return Astro.slots.has("default");
+  }
+  // 名前付きスロット
+  return Astro.slots.has(slotName);
+};
+
+// スロットの中身を確認
+const hasTopSlot = hasSlotContent("top");
+const hasDefaultSlot = hasSlotContent(null);
+const hasBottomSlot = hasSlotContent("bottom");
+---
+
+<Element class:list={classList} {...rest}>
+  {
+    hasTopSlot && (
+      <div data-slot="top">
+        <slot name="top" />
+      </div>
+    )
+  }
+  {
+    hasDefaultSlot && (
+      <div data-slot="center">
+        <slot />
+      </div>
+    )
+  }
+  {
+    hasBottomSlot && (
+      <div data-slot="bottom">
+        <slot name="bottom" />
+      </div>
+    )
+  }
+</Element>
+
+<style lang="scss">
+  @include element-base("cover") {
+    // デフォルト
+    --padding-top: 0;
+    --padding-right: 0;
+    --padding-bottom: 0;
+    --padding-left: 0;
+    --gap: var(--space-xs);
+    --min-height: attr(data-height type(<length>), 100dvh);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    min-block-size: var(--min-height);
+    padding: var(--padding-top) var(--padding-right) var(--padding-bottom)
+      var(--padding-left);
+  }
+
+  @include generate-padding-utilities;
+  @include generate-spacing-utilities("gap");
+
+  /* centerスロットのラッパーは上下マージンをautoに */
+  [data-slot="center"] {
+    margin-block: auto;
+  }
+
+  /* topスロットのラッパーは上マージンを0に */
+  [data-slot="top"] {
+    margin-block-start: 0;
+  }
+
+  /* bottomスロットのラッパーは下マージンを0に */
+  [data-slot="bottom"] {
+    margin-block-end: 0;
+  }
+</style>

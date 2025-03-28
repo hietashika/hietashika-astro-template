@@ -1,0 +1,53 @@
+---
+import { getPaddingClasses, type PaddingValue } from "@utils/spacing";
+
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  padding?: PaddingValue;
+  intrinsic?: boolean;
+  andText?: boolean;
+}
+
+const {
+  Element = "div",
+  padding = 1,
+  intrinsic = false,
+  andText = false,
+  ...rest
+} = Astro.props as Props;
+
+const classList = [
+  "center",
+  ...getPaddingClasses(padding),
+  ...(intrinsic ? ["intrinsic"] : []),
+  ...(andText ? ["andText"] : []),
+];
+---
+
+<Element class:list={classList} {...rest}>
+  <slot />
+</Element>
+
+<style lang="scss">
+  @include element-base("center") {
+    // デフォルト
+    --padding: var(--space-m);
+
+    box-sizing: content-box;
+    max-inline-size: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--padding);
+  }
+
+  @include generate-spacing-utilities("padding");
+
+  .intrinsic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .andText {
+    text-align: center;
+  }
+</style>
