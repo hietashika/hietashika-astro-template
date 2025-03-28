@@ -58,4 +58,11 @@
   @each $direction in ("top", "right", "bottom", "left") {
     @include generate-spacing-utilities("padding-#{$direction}");
   }
+}
+
+// ギャップのユーティリティクラスを生成
+@mixin generate-gap-utilities {
+  @include generate-spacing-utilities("gap");
+  @include generate-spacing-utilities("row-gap");
+  @include generate-spacing-utilities("column-gap");
 } 

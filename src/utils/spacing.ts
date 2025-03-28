@@ -11,6 +11,15 @@ export type SpaceSize = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined
 export type PaddingValue = SpaceSize | string;
 
 /**
+ * ギャップの設定を表す型
+ * 単一の値、文字列、または行と列の値を指定可能
+ */
+export type GapValue = SpaceSize | string | {
+  row?: SpaceSize;
+  column?: SpaceSize;
+};
+
+/**
  * 指定されたプレフィックスとサイズに基づいてスペーシングのクラス名を生成する
  * @param prefix - クラス名のプレフィックス（例: "gap"）
  * @param size - スペーシングのサイズ
@@ -86,4 +95,51 @@ export const getPaddingClasses = (value: PaddingValue): string[] => {
     getSpacingClass("padding-bottom", bottom),
     getSpacingClass("padding-left", left),
   ];
+};
+
+/**
+ * ギャップ値を解析して[row, column]の形式に変換する
+ * @param value - ギャップ値
+ * @returns [row, column]の形式の配列
+ * @example
+ * parseGapValue("1 3") // => [1, 3]
+ * parseGapValue("2") // => [2, 2]
+ */
+export const parseGapValue = (value: GapValue): [SpaceSize, SpaceSize] => {
+  // 数値の場合は両方同じ値を返す
+  if (typeof value === "number") {
+    return [value, value];
+  }
+
+  // 文字列の場合はスペースで分割して解析
+  if (typeof value === "string") {
+    const values = value.trim().split(/\s+/).map(v => parseInt(v) as SpaceSize);
+    return values.length === 1 ? [values[0], values[0]] : [values[0], values[1]];
+  }
+
+  // オブジェクトの場合
+  if (typeof value === "object" && value !== null) {
+    return [value.row, value.column];
+  }
+
+  // undefinedの場合はデフォルト値を返す
+  return [undefined, undefined];
+};
+
+/**
+ * ギャップのクラス名を生成する
+ * @param value - ギャップ値
+ * @returns ギャップのクラス名の配列
+ */
+export const getGapClasses = (value: GapValue): string[] => {
+  const [row, column] = parseGapValue(value);
+  
+  const classes: string[] = [];
+  if (row !== undefined) {
+    classes.push(getSpacingClass("row-gap", row));
+  }
+  if (column !== undefined) {
+    classes.push(getSpacingClass("column-gap", column));
+  }
+  return classes;
 }; 
