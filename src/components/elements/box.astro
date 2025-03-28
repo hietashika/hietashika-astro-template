@@ -4,7 +4,12 @@ import { getPaddingClasses, type PaddingValue } from "@utils/spacing";
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
   padding?: PaddingValue;
+
+  // 配置
   surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
+
+  // ユーティリティ
+  [key: string]: unknown;
 }
 
 const {
@@ -12,7 +17,7 @@ const {
   padding,
   surface = "primary",
   ...rest
-}: Props = Astro.props;
+} = Astro.props as Props;
 
 const classList = [
   "box",
@@ -29,10 +34,18 @@ const classList = [
 
 <style lang="scss">
   @include element-base("box") {
-    padding: var(--padding-top, 0) var(--padding-right, 0)
-      var(--padding-bottom, 0) var(--padding-left, 0);
-    background-color: var(--background, transparent);
-    color: var(--color-high, inherit);
+    // デフォルト
+    --padding-top: 0;
+    --padding-right: 0;
+    --padding-bottom: 0;
+    --padding-left: 0;
+    --background: transparent;
+    --color-text-high: inherit;
+
+    padding: var(--padding-top) var(--padding-right) var(--padding-bottom)
+      var(--padding-left);
+    background-color: var(--background);
+    color: var(--color-text-high);
     outline: 0.125rem solid transparent;
     outline-offset: -0.125rem;
 
@@ -61,6 +74,8 @@ const classList = [
     &--accent {
       --background: var(--color-background-accent);
       --color-text-high: var(--color-text-primary);
+      --color-text-middle: var(--color-text-secondary);
+      --color-text-low: var(--color-text-secondary);
     }
   }
 

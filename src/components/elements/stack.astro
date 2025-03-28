@@ -1,20 +1,36 @@
 ---
-import { getSpacingClass, type SpaceSize } from "@utils/spacing";
+import {
+  getGapClasses,
+  getPaddingClasses,
+  type GapValue,
+  type PaddingValue,
+} from "@utils/spacing";
 
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
   horizontal?: boolean;
-  gap?: SpaceSize;
+  gap?: GapValue;
+  padding?: PaddingValue;
+  // ユーティリティ
+  [key: string]: unknown;
 }
 
-const { Element = "div", horizontal = false, gap }: Props = Astro.props;
+const {
+  Element = "div",
+  horizontal = false,
+  gap,
+  padding,
+  ...rest
+} = Astro.props as Props;
 
 const classList = [
   "stack",
+  // gapのクラスを追加
+  ...getGapClasses(gap),
+  // paddingのクラスを追加
+  ...(padding ? getPaddingClasses(padding) : []),
   // horizonralの有無によってクラス名を出し分ける
   horizontal ? "horizontal" : "vertical",
-  // gapのクラスを追加
-  getSpacingClass("gap", gap),
 ];
 ---
 
@@ -24,6 +40,13 @@ const classList = [
 
 <style lang="scss">
   @include element-base("stack") {
+    // デフォルト
+    --gap: var(--space-xs);
+    --padding-top: 0;
+    --padding-right: 0;
+    --padding-bottom: 0;
+    --padding-left: 0;
+
     display: grid;
     gap: var(--gap);
   }
