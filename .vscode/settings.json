@@ -3,10 +3,10 @@
 	"stylelint.validate": ["css", "scss", "html", "astro"],
 	// 保存時に自動で --fix するように
 	"editor.codeActionsOnSave": {
-		"source.fixAll.prettier": "always",
-		"source.fixAll.stylelint": "always",
-		"source.organizeImports.biome": "always",
-		"quickfix.biome": "always"
+		"source.fixAll.prettier": "explicit",
+		"source.fixAll.stylelint": "explicit",
+		"source.organizeImports.biome": "explicit",
+		"quickfix.biome": "explicit"
 	},
 	// 自動で保存しないように
 	"editor.formatOnSave": false,
