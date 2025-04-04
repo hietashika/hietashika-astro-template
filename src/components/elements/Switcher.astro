@@ -1,0 +1,51 @@
+---
+import { gapClasses, type GapValue } from "@utils/spacing";
+
+interface Props {
+  Element?: keyof HTMLElementTagNameMap;
+  class?: string;
+  gap?: GapValue;
+  // ユーティリティ
+  [key: string]: unknown;
+}
+
+const {
+  Element = "div",
+  gap,
+  threshold,
+  class: className,
+  ...rest
+} = Astro.props as Props;
+
+const classList = ["switcher", gapClasses(gap), className];
+
+const props = {
+  ...rest,
+  "data-threshold": threshold || null,
+};
+---
+
+<Element class:list={classList} {...props}>
+  <slot />
+</Element>
+
+<style lang="scss" define:vars={{ gap }}>
+  .switcher {
+    // デフォルト
+    --threshold: attr(data-threshold rem);
+    --gap: var(--space-2);
+    --row-gap: var(--gap);
+    --column-gap: var(--gap);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--row-gap) var(--column-gap);
+
+    > :global(*) {
+      flex-grow: 1;
+      flex-basis: calc((var(--threshold, 30rem) - 100%) * 999);
+    }
+  }
+
+  @include sh(rg, cg);
+</style>

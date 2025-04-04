@@ -1,0 +1,40 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+import Stack from "@components/Stack.astro";
+import Box from "@elements/Box.astro";
+import Cluster from "@elements/Cluster.astro";
+import Center from "@elements/Center.astro";
+import Switcher from "@elements/Switcher.astro";
+import Sidebar from "@elements/Sidebar.astro";
+---
+
+<Layout pageTitle="Test">
+  <Cluster gap="2 6" align="center" justify="between" content="center">
+    <div>test</div>
+    <div>test</div>
+  </Cluster>
+  <Stack align="vertical" gap="3">
+    <div>test</div>
+    <div>test</div>
+    <Stack align="horizontal" gap="3">
+      <div>test</div>
+      <div>test</div>
+    </Stack>
+  </Stack>
+  <Box padding="3 2" surface="accent">
+    <p>test</p>
+  </Box>
+  <Center intrinsic>
+    <p>test</p>
+  </Center>
+  <Switcher>
+    <div>test</div>
+    <div>test</div>
+    <div>test</div>
+  </Switcher>
+  <Sidebar width="20rem" min="50%" side="right" noStretch>
+    <div>test</div>
+    <div>test</div>
+  </Sidebar>
+</Layout>

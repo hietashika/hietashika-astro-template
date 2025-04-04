@@ -5,16 +5,19 @@ import Box from "@elements/Box.astro";
 import Center from "@elements/Center.astro";
 import Cluster from "@elements/Cluster.astro";
 import Cover from "@elements/Cover.astro";
+import Sidebar from "@elements/Sidebar.astro";
+import Switcher from "@elements/Switcher.astro";
+import Spacing from "@/components/Stack.astro";
 ---
 
 <Layout pageTitle="Home">
-  <Stack gap={3}>
+  <Stack gap="3">
     <h1>Home</h1>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
     </p>
-    <Box surface="accent" padding={1}>
-      <Stack gap={1} padding="1 2" horizontal>
+    <Box surface="accent" padding="1 2">
+      <Stack gap="1" padding="1 2" horizontal>
         <h2>Heading 2</h2>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
@@ -40,5 +43,18 @@ import Cover from "@elements/Cover.astro";
       <p>Lorem ipsum dolor sit amet</p>
       <span slot="bottom">Lorem ipsum dolor sit amet</span>
     </Cover>
+    <Sidebar>
+      <p>sidebar sidebar sidebar</p>
+    </Sidebar>
+    <Switcher gap="3">
+      <p>switcher switcher switcher</p>
+      <p>switcher switcher switcher</p>
+      <p>switcher switcher switcher</p>
+    </Switcher>
   </Stack>
+
+  <Spacing gap="1">
+    <div>spacing</div>
+    <div>spacing</div>
+  </Spacing>
 </Layout>
