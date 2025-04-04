@@ -1,0 +1,63 @@
+---
+import { type GapValue, gapClasses } from "@utils/spacing";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
+	name?: string | undefined;
+	dir?: "ltr" | "rtl" | undefined;
+	label?: string | undefined;
+
+	// ユーティリティ
+	[key: string]: unknown;
+}
+
+const {
+	Element = "span",
+	class: className,
+	text,
+	gap,
+	name,
+	dir,
+	label,
+	...rest
+} = Astro.props as Props;
+
+const classList = [text ? "withIcon" : null, gapClasses(gap), className];
+
+const props = {
+	...rest,
+	dir,
+	"aria-label": label,
+};
+
+const role = label ? "img" : undefined;
+---
+
+<Element class:list={classList} role={role} {...props}>
+	{name ? <Icon name={name} class="icon" /> : <span>no icon</span>}
+	<slot />
+</Element>
+
+<style lang="scss">
+	.icon {
+		// デフォルト
+		--gap: var(--space-2);
+
+		width: 1cap;
+		height: 1cap;
+	}
+
+	.withIcon {
+		display: inline-flex;
+		align-items: baseline;
+	}
+
+	.withIcon .icon {
+		margin-inline-end: var(--gap);
+	}
+
+	@include spacing(g, gap);
+</style>
