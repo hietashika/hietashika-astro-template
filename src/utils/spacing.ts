@@ -1,145 +1,107 @@
-/**
- * スペーシングのサイズを表す型
- * -3から7までの数値、またはundefinedを指定可能
- */
-export type SpaceSize = -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined;
+import { error } from "node_modules/astro/dist/core/logger/core";
 
 /**
- * パディングの値を表す型
- * 単一の値、または1-4つの値をスペース区切りで指定可能
+ * パディング値の型定義
  */
-export type PaddingValue = SpaceSize | string;
+export type PaddingValue = string | number | undefined;
 
 /**
- * ギャップの設定を表す型
- * 単一の値、文字列、または行と列の値を指定可能
+ * ギャップ値の型定義
  */
-export type GapValue = SpaceSize | string | {
-  row?: SpaceSize;
-  column?: SpaceSize;
+export type GapValue = string | number | undefined;
+
+/**
+ * CSSのショートハンド記法に対応したパディングクラスを生成する
+ * 
+ * @param paddingValue - パディング値（例: "0", "1 2", "1 2 3", "1 2 3 4"）
+ * @returns パディングクラス文字列
+ * 
+ * 使用例:
+ * - generatePaddingClasses("3") → "pt--3 pr--3 pb--3 pl--3"
+ * - generatePaddingClasses("3 5") → "pt--3 pr--5 pb--3 pl--5"
+ * - generatePaddingClasses("1 2 3") → "pt--1 pr--2 pb--3 pl--2"
+ * - generatePaddingClasses("1 2 3 4") → "pt--1 pr--2 pb--3 pl--4"
+ */
+export const paddingClasses = (paddingValue: PaddingValue): string => {
+  const values = String(paddingValue).split(" ");
+
+  // 値がundefinedの場合は空文字を返す
+  if (paddingValue === undefined) {
+    return "";
+  }
+
+  // 値の数に応じて異なる処理を実行
+  if (values.length === 1) {
+    // 1つの値: すべての方向に同じ値を適用
+    const value = values[0];
+    return `pt--${value} pr--${value} pb--${value} pl--${value}`;
+  } else if (values.length === 2) {
+    // 2つの値: 上下、左右
+    const [vertical, horizontal] = values;
+    return `pt--${vertical} pr--${horizontal} pb--${vertical} pl--${horizontal}`;
+  } else if (values.length === 3) {
+    // 3つの値: 上、左右、下
+    const [top, horizontal, bottom] = values;
+    return `pt--${top} pr--${horizontal} pb--${bottom} pl--${horizontal}`;
+  } else if (values.length === 4) {
+    // 4つの値: 上、右、下、左
+    const [top, right, bottom, left] = values;
+    return `pt--${top} pr--${right} pb--${bottom} pl--${left}`;
+  }
+
+  // デフォルト（不正な値の場合）
+  return "";
 };
 
 /**
- * 指定されたプレフィックスとサイズに基づいてスペーシングのクラス名を生成する
- * @param prefix - クラス名のプレフィックス（例: "gap"）
- * @param size - スペーシングのサイズ
- * @returns BEM形式のクラス名
- * @example
- * getSpacingClass("gap", 1) // => "gap--1"
- * getSpacingClass("gap", -3) // => "gap--minus3"
- * getSpacingClass("gap", undefined) // => "gap--default"
+ * padding-inline クラスを生成する
+ * 
+ * @param paddingValue - パディング値（例: "0", "1", "1 2"）
+ * @returns パディングクラス文字列
  */
-export const getSpacingClass = (prefix: string, size?: SpaceSize): string => {
-  if (size === undefined) return `${prefix}--default`;
-  if (size === 0) return `${prefix}--0`;
-  
-  // 負の値の場合（小さいスペース）
-  if (size < 0) {
-    const index = Math.abs(size);
-    return `${prefix}--minus${index}`;
+export const paddingInlineClasses = (paddingValue: PaddingValue): string => {
+  const values = String(paddingValue).split(" ");
+
+  // 値がundefinedの場合は空文字を返す
+  if (paddingValue === undefined) {
+    return "";
   }
-  
-  // 正の値の場合（大きいスペース）
-  return `${prefix}--${size}`;
+
+  // 値の数に応じて異なる処理を実行
+  if (values.length === 1) {
+    // 1つの値: すべての方向に同じ値を適用
+    const value = values[0];
+    return `pi--${value}`;
+  }
+
+  // デフォルト（不正な値の場合）
+  return "";
 };
 
 /**
- * パディング値を解析してSpaceSizeの配列に変換する
- * @param value - パディング値（単一の値または1-4つの値をスペース区切りで指定）
- * @returns SpaceSizeの配列（上、右、下、左の順）
- * @example
- * parsePaddingValue("1") // => [1, 1, 1, 1]
- * parsePaddingValue("1 2") // => [1, 2, 1, 2]
- * parsePaddingValue("1 2 3") // => [1, 2, 3, 2]
- * parsePaddingValue("1 2 3 4") // => [1, 2, 3, 4]
+ * ギャップ値からCSSクラスを生成する
+ * 
+ * @param gapValue - ギャップ値
+ * @returns ギャップクラス文字列
  */
-export const parsePaddingValue = (value: PaddingValue): SpaceSize[] => {
-  // 数値の場合は全方向同じ値を返す
-  if (typeof value === "number") {
-    return [value, value, value, value];
+export const gapClasses = (gapValue: GapValue): string => {
+  const value = String(gapValue).split(" ");
+
+  // 値がundefinedの場合は空文字を返す
+  if (gapValue === undefined) {
+    return "";
   }
 
-  // 文字列の場合はスペースで分割して解析
-  if (typeof value === "string") {
-    const values = value.split(" ").map(v => parseInt(v) as SpaceSize);
-    
-    switch (values.length) {
-      case 1: // 全方向同じ値
-        return [values[0], values[0], values[0], values[0]];
-      case 2: // 上下、左右
-        return [values[0], values[1], values[0], values[1]];
-      case 3: // 上、左右、下
-        return [values[0], values[1], values[2], values[1]];
-      case 4: // 上、右、下、左
-        return values;
-      default:
-        throw new Error("Invalid padding value format");
-    }
+  // 値の数に応じて異なる処理を実行
+  if (value.length === 1) {
+    // 1つの値を適用
+    return `g--${value}`;
+  } else if (value.length === 2) {
+    // 2つの値を適用
+    const [row, column] = value;
+    return `rg--${row} cg--${column}`;
   }
 
-  // undefined の場合はデフォルト値を返す
-  return [undefined, undefined, undefined, undefined];
+  // デフォルト（不正な値の場合）
+  return "";
 };
-
-/**
- * パディングのクラス名を生成する
- * @param value - パディング値
- * @returns パディングのクラス名の配列
- */
-export const getPaddingClasses = (value: PaddingValue): string[] => {
-  const [top, right, bottom, left] = parsePaddingValue(value);
-  
-  return [
-    getSpacingClass("padding-top", top),
-    getSpacingClass("padding-right", right),
-    getSpacingClass("padding-bottom", bottom),
-    getSpacingClass("padding-left", left),
-  ];
-};
-
-/**
- * ギャップ値を解析して[row, column]の形式に変換する
- * @param value - ギャップ値
- * @returns [row, column]の形式の配列
- * @example
- * parseGapValue("1 3") // => [1, 3]
- * parseGapValue("2") // => [2, 2]
- */
-export const parseGapValue = (value: GapValue): [SpaceSize, SpaceSize] => {
-  // 数値の場合は両方同じ値を返す
-  if (typeof value === "number") {
-    return [value, value];
-  }
-
-  // 文字列の場合はスペースで分割して解析
-  if (typeof value === "string") {
-    const values = value.trim().split(/\s+/).map(v => parseInt(v) as SpaceSize);
-    return values.length === 1 ? [values[0], values[0]] : [values[0], values[1]];
-  }
-
-  // オブジェクトの場合
-  if (typeof value === "object" && value !== null) {
-    return [value.row, value.column];
-  }
-
-  // undefinedの場合はデフォルト値を返す
-  return [undefined, undefined];
-};
-
-/**
- * ギャップのクラス名を生成する
- * @param value - ギャップ値
- * @returns ギャップのクラス名の配列
- */
-export const getGapClasses = (value: GapValue): string[] => {
-  const [row, column] = parseGapValue(value);
-  
-  const classes: string[] = [];
-  if (row !== undefined) {
-    classes.push(getSpacingClass("row-gap", row));
-  }
-  if (column !== undefined) {
-    classes.push(getSpacingClass("column-gap", column));
-  }
-  return classes;
-}; 

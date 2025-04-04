@@ -80,7 +80,7 @@ $white-005: rgb(255 255 255 / 5%);
 	--color-secondary: #{$secondary-060};
 
 	// Text Color
-	--color-text-high: #{$gray-100};  
+	--color-text-high: #{$gray-100};
 	--color-text-middle: #{$gray-alpha-070};
 	--color-text-low: #{$gray-alpha-060};
 	--color-text-disabled: #{$gray-alpha-030};
@@ -112,10 +112,10 @@ $white-005: rgb(255 255 255 / 5%);
 	--color-active-outlined: #{$primary-010};
 	--color-active-neutral: #{$gray-alpha-005};
 
-	
+
 	// フォントサイズ
 	--font-size-base: 1rem; // 16px - 基準サイズ
-	
+
 	// 小さいフォントサイズ（12px〜14px）
 	--font-size-xs: 12; // 12px
 	--font-size-s: 14; // 14px
@@ -124,12 +124,12 @@ $white-005: rgb(255 255 255 / 5%);
 	--font-size-m: 16; // 16px
 	--font-size-l: 18; // 18px
 	--font-size-xl: 20; // 20px
-	
+
 	// 大きいフォントサイズ（24px〜36px）
 	--font-size-2xl: 24; // 24px
 	--font-size-3xl: 30; // 30px
 	--font-size-4xl: 36; // 36px
-	
+
 	// 見出し・タイトル用フォントサイズ（48px〜72px）
 	--font-size-5xl: 48; // 48px
 	--font-size-6xl: 60; // 60px
@@ -146,31 +146,20 @@ $white-005: rgb(255 255 255 / 5%);
 
 	// 余白の基本単位
 	--space-base: 1rem; // 16px - 基準サイズ
-	
+
 	// 余白変数（8ポイントグリッドシステムに基づく）
-	
-	// 非常に小さいスペース（4px〜12px）
-	--space-2xs: calc(var(--space-base) * 0.25); // 4px
-	--space-xs: calc(var(--space-base) * 0.5); // 8px
-	--space-s: calc(var(--space-base) * 0.75); // 12px
-	
-	// 基本的なスペース（16px〜32px）
-	--space-m: var(--space-base); // 16px - 基準サイズ
-	--space-l: calc(var(--space-base) * 1.5); // 24px
-	--space-xl: calc(var(--space-base) * 2); // 32px
-	
-	// 大きいスペース（48px〜128px）
-	--space-2xl: calc(var(--space-base) * 3); // 48px
-	--space-3xl: calc(var(--space-base) * 4); // 64px
-	--space-4xl: calc(var(--space-base) * 6); // 96px
-	--space-5xl: calc(var(--space-base) * 8); // 128px
-	
-	// 非常に大きいスペース（192px〜768px）
-	--space-6xl: calc(var(--space-base) * 12); // 192px
-	--space-7xl: calc(var(--space-base) * 16); // 256px
-	--space-8xl: calc(var(--space-base) * 24); // 384px
-	--space-9xl: calc(var(--space-base) * 32); // 512px
-	--space-10xl: calc(var(--space-base) * 40); // 640px
-	--space-11xl: calc(var(--space-base) * 48); // 768px
+	--space-0: 0; // 0
+	--space-1: 0.25rem; // 4px
+	--space-2: 0.5rem; // 8px
+	--space-3: 0.75rem; // 12px
+	--space-4: 1rem; // 16px
+	--space-5: 1.25rem; // 20px
+	--space-6: 1.5rem; // 24px
+	--space-7: 1.75rem; // 28px
+	--space-8: 2rem; // 32px
+	--space-9: 2.25rem; // 36px
+	--space-10: 2.5rem; // 40px
+	--space-11: 2.75rem; // 44px
+	--space-12: 3rem; // 48px
 }
 
