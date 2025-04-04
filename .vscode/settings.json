@@ -8,6 +8,7 @@
   ],
   // 保存時に自動で --fix するように
   "editor.codeActionsOnSave": {
+    "source.fixAll.prettier": "always",
     "source.fixAll.stylelint": "always",
     "source.organizeImports.biome": "always",
     "quickfix.biome": "always"
@@ -26,13 +27,8 @@
   // Astroファイルの設定
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode",
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.stylelint": "always"
-    }
   },
-  
+
   // Task Explorer設定
   "taskExplorer.enabledTasks": {
     "npm": true,
