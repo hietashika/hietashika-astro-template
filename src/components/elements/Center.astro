@@ -1,8 +1,9 @@
 ---
-import { getPaddingClasses, type PaddingValue } from "@utils/spacing";
+import { paddingInlineClasses, type PaddingValue } from "@utils/spacing";
 
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
+  class?: string;
   padding?: PaddingValue;
   intrinsic?: boolean;
   andText?: boolean;
@@ -10,17 +11,19 @@ interface Props {
 
 const {
   Element = "div",
-  padding = 1,
-  intrinsic = false,
-  andText = false,
+  class: className,
+  padding = "1",
+  intrinsic,
+  andText,
   ...rest
 } = Astro.props as Props;
 
 const classList = [
   "center",
-  ...getPaddingClasses(padding),
-  ...(intrinsic ? ["intrinsic"] : []),
-  ...(andText ? ["andText"] : []),
+  paddingInlineClasses(padding),
+  intrinsic && "intrinsic",
+  andText && "andText",
+  className,
 ];
 ---
 
@@ -31,15 +34,15 @@ const classList = [
 <style lang="scss">
   @include element-base("center") {
     // デフォルト
-    --padding: var(--space-m);
+    --padding-inline: var(--space-4);
 
     box-sizing: content-box;
     max-inline-size: var(--max-width);
     margin-inline: auto;
-    padding-inline: var(--padding);
+    padding-inline: var(--padding-inline);
   }
 
-  @include generate-spacing-utilities("padding");
+  @include spacing("pi", "padding-inline");
 
   .intrinsic {
     display: flex;

@@ -1,8 +1,9 @@
 ---
-import { getGapClasses, type GapValue } from "@utils/spacing";
+import { gapClasses, type GapValue } from "@utils/spacing";
 
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
+  class?: string;
   gap?: GapValue;
 
   // 配置
@@ -14,30 +15,38 @@ interface Props {
   [key: string]: unknown;
 }
 
-const { Element = "div", gap, align, justify, content } = Astro.props as Props;
+const {
+  Element = "div",
+  class: className,
+  gap,
+  align,
+  justify,
+  content,
+  ...rest
+} = Astro.props as Props;
 
 const classList = [
   "cluster",
-  ...getGapClasses(gap),
-  align ? `align--${align}` : "",
-  justify ? `justify--${justify}` : "",
-  content ? `content--${content}` : "",
+  gapClasses(gap),
+  align ? `a--${align}` : "",
+  justify ? `j--${justify}` : "",
+  content ? `c--${content}` : "",
+  className,
 ];
 ---
 
-<Element class:list={classList}>
+<Element class:list={classList} {...rest}>
   <slot />
 </Element>
 
 <style lang="scss">
-  @include element-base("cluster") {
+  .cluster {
     // デフォルト
-    --gap: var(--space-xs);
-    --row-gap: var(--gap);
-    --column-gap: var(--gap);
     --content: flex-start;
     --justify: flex-start;
     --align: flex-start;
+    --row-gap: 0;
+    --column-gap: 0;
 
     display: flex;
     flex-wrap: wrap;
@@ -46,9 +55,9 @@ const classList = [
     align-items: var(--align);
   }
 
-  @include generate-gap-utilities;
+  @include sh(rg, cg);
 
-  .content {
+  .c {
     &--end {
       --content: flex-end;
     }
@@ -58,7 +67,7 @@ const classList = [
     }
   }
 
-  .align {
+  .a {
     &--end {
       --align: flex-end;
     }
@@ -68,7 +77,7 @@ const classList = [
     }
   }
 
-  .justify {
+  .j {
     &--end {
       --justify: flex-end;
     }

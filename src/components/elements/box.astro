@@ -1,12 +1,13 @@
 ---
-import { getPaddingClasses, type PaddingValue } from "@utils/spacing";
+import { paddingClasses, type PaddingValue } from "@utils/spacing";
 
 interface Props {
   Element?: keyof HTMLElementTagNameMap;
-  padding?: PaddingValue;
+  class?: string;
 
   // 配置
   surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
+  padding?: PaddingValue;
 
   // ユーティリティ
   [key: string]: unknown;
@@ -14,18 +15,13 @@ interface Props {
 
 const {
   Element = "div",
+  class: className,
   padding,
   surface = "primary",
   ...rest
 } = Astro.props as Props;
 
-const classList = [
-  "box",
-  // surfaceのクラスを追加
-  `surface--${surface}`,
-  // paddingのクラスを追加
-  ...(padding ? getPaddingClasses(padding) : []),
-];
+const classList = ["box", `${surface}`, paddingClasses(padding), className];
 ---
 
 <Element class:list={classList} {...rest}>
@@ -33,19 +29,17 @@ const classList = [
 </Element>
 
 <style lang="scss">
-  @include element-base("box") {
+  .box {
     // デフォルト
-    --padding-top: 0;
-    --padding-right: 0;
-    --padding-bottom: 0;
-    --padding-left: 0;
-    --background: transparent;
-    --color-text-high: inherit;
+    --color: var(--color-text-high);
+    --pt: var(--space-0);
+    --pr: var(--space-0);
+    --pb: var(--space-0);
+    --pl: var(--space-0);
 
-    padding: var(--padding-top) var(--padding-right) var(--padding-bottom)
-      var(--padding-left);
-    background-color: var(--background);
-    color: var(--color-text-high);
+    padding: var(--pt) var(--pr) var(--pb) var(--pl);
+    background: var(--background);
+    color: var(--color);
     outline: 0.125rem solid transparent;
     outline-offset: -0.125rem;
 
@@ -54,31 +48,26 @@ const classList = [
     }
   }
 
-  .surface {
-    &--primary {
-      --background: var(--color-background-primary);
-    }
+  @include sh(p);
 
-    &--secondary {
-      --background: var(--color-background-secondary);
-    }
-
-    &--tertiary {
-      --background: var(--color-background-tertiary);
-    }
-
-    &--quaternary {
-      --background: var(--color-background-quaternary);
-    }
-
-    &--accent {
-      --background: var(--color-background-accent);
-      --color-text-high: var(--color-text-primary);
-      --color-text-middle: var(--color-text-secondary);
-      --color-text-low: var(--color-text-secondary);
-    }
+  .primary {
+    --background: var(--color-background-primary);
   }
 
-  // パディングユーティリティを生成
-  @include generate-padding-utilities;
+  .secondary {
+    --background: var(--color-background-secondary);
+  }
+
+  .tertiary {
+    --background: var(--color-background-tertiary);
+  }
+
+  .quaternary {
+    --background: var(--color-background-quaternary);
+  }
+
+  .accent {
+    --background: var(--color-background-accent);
+    --color: var(--color-text-primary);
+  }
 </style>
