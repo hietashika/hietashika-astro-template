@@ -1,0 +1,53 @@
+---
+import { type GapValue, gapClasses } from "@utils/spacing";
+
+interface Props {
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
+	min?: string;
+
+	// ユーティリティ
+	[key: string]: unknown;
+}
+
+const {
+	Element = "div",
+	class: className,
+	gap,
+	min,
+	...rest
+} = Astro.props as Props;
+
+const classList = ["grid", gapClasses(gap), className];
+
+const props = {
+	...rest,
+	"data-min": min || null,
+};
+---
+
+<Element class:list={classList} {...props}>
+	<slot />
+</Element>
+
+<style lang="scss">
+	.grid {
+		// デフォルト
+		--gap: var(--space-2);
+		--row-gap: var(--gap);
+		--column-gap: var(--gap);
+		--min: attr(data-min px);
+
+		display: grid;
+		grid-gap: var(--row-gap) var(--column-gap);
+	}
+
+	@include sh(rg, cg);
+
+	@supports (inline-size: min(var(--min, 250px), 100%)) {
+		.grid {
+			grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 250px), 100%), 1fr));
+		}
+	}
+</style>
