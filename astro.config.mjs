@@ -5,9 +5,17 @@ import mdx from "@astrojs/mdx";
 
 import playformCompress from "@playform/compress";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
-	integrations: [mdx(), playformCompress()],
+	integrations: [
+		mdx(),
+		playformCompress(),
+		icon({
+			iconDir: "src/assets/icons",
+		}),
+	],
 	devToolbar: {
 		enabled: false,
 	},
@@ -16,11 +24,14 @@ export default defineConfig({
 			preprocessorOptions: {
 				scss: {
 					additionalData: `
-					@use "@styles/tools/_mixin.scss" as *;
-					@use "@styles/tools/_function.scss" as *;
-					@use "@styles/tools/_spacing.scss" as *;`,
+                    @use "@styles/tools/_mixin.scss" as *;
+                    @use "@styles/tools/_function.scss" as *;
+                    @use "@styles/tools/_spacing.scss" as *;`,
 				},
 			},
 		},
+	},
+	experimental: {
+		svg: true,
 	},
 });
