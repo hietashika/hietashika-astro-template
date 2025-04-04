@@ -1,51 +1,51 @@
 ---
-import { gapClasses, type GapValue } from "@utils/spacing";
+import { type GapValue, gapClasses } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
-  gap?: GapValue;
-  // ユーティリティ
-  [key: string]: unknown;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
+	// ユーティリティ
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  gap,
-  threshold,
-  class: className,
-  ...rest
+	Element = "div",
+	gap,
+	threshold,
+	class: className,
+	...rest
 } = Astro.props as Props;
 
 const classList = ["switcher", gapClasses(gap), className];
 
 const props = {
-  ...rest,
-  "data-threshold": threshold || null,
+	...rest,
+	"data-threshold": threshold || null,
 };
 ---
 
 <Element class:list={classList} {...props}>
-  <slot />
+	<slot />
 </Element>
 
 <style lang="scss" define:vars={{ gap }}>
-  .switcher {
-    // デフォルト
-    --threshold: attr(data-threshold rem);
-    --gap: var(--space-2);
-    --row-gap: var(--gap);
-    --column-gap: var(--gap);
+	.switcher {
+		// デフォルト
+		--threshold: attr(data-threshold rem);
+		--gap: var(--space-2);
+		--row-gap: var(--gap);
+		--column-gap: var(--gap);
 
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--row-gap) var(--column-gap);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--row-gap) var(--column-gap);
 
-    > :global(*) {
-      flex-grow: 1;
-      flex-basis: calc((var(--threshold, 30rem) - 100%) * 999);
-    }
-  }
+		> :global(*) {
+			flex-grow: 1;
+			flex-basis: calc((var(--threshold, 30rem) - 100%) * 999);
+		}
+	}
 
-  @include sh(rg, cg);
+	@include sh(rg, cg);
 </style>

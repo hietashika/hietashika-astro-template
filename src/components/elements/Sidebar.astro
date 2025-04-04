@@ -1,80 +1,80 @@
 ---
-import { gapClasses, type GapValue } from "@utils/spacing";
+import { type GapValue, gapClasses } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
-  gap?: GapValue;
-  noStretch?: boolean;
-  side?: "left" | "right";
-  width?: string;
-  min?: string;
-  // ユーティリティ
-  [key: string]: unknown;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
+	noStretch?: boolean;
+	side?: "left" | "right";
+	width?: string;
+	min?: string;
+	// ユーティリティ
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  class: className,
-  gap,
-  noStretch,
-  side = "left",
-  width,
-  min,
-  ...rest
+	Element = "div",
+	class: className,
+	gap,
+	noStretch,
+	side = "left",
+	width,
+	min,
+	...rest
 } = Astro.props as Props;
 
 const classList = [
-  "sidebar",
-  gapClasses(gap),
-  width ? "sideWidth" : "",
-  side ? `${side}` : "",
-  noStretch ? "noStretch" : "",
-  min ? "min" : "",
-  className,
+	"sidebar",
+	gapClasses(gap),
+	width ? "sideWidth" : "",
+	side ? `${side}` : "",
+	noStretch ? "noStretch" : "",
+	min ? "min" : "",
+	className,
 ];
 
 const props = {
-  ...rest,
-  "data-width": width || null,
-  "data-min": min || null,
+	...rest,
+	"data-width": width || null,
+	"data-min": min || null,
 };
 ---
 
 <Element class:list={classList} {...props}>
-  <slot />
+	<slot />
 </Element>
 
 <style lang="scss">
-  .sidebar {
-    // デフォルト
-    --gap: var(--space-2);
-    --sideWidth: attr(data-width rem);
-    --min: attr(data-min %);
+	.sidebar {
+		// デフォルト
+		--gap: var(--space-2);
+		--sideWidth: attr(data-width rem);
+		--min: attr(data-min %);
 
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--gap);
 
-    > :global(*) {
-      flex-grow: 1;
-    }
-  }
+		> :global(*) {
+			flex-grow: 1;
+		}
+	}
 
-  @include spacing("g", "gap");
+	@include spacing("g", "gap");
 
-  .sideWidth > :global(*) {
-    flex-basis: var(--sideWidth);
-  }
+	.sideWidth > :global(*) {
+		flex-basis: var(--sideWidth);
+	}
 
-  .right > :global(:first-child),
-  .left > :global(:last-child) {
-    flex-grow: 999;
-    flex-basis: 0;
-    min-inline-size: var(--min, 50%);
-  }
+	.right > :global(:first-child),
+	.left > :global(:last-child) {
+		flex-grow: 999;
+		flex-basis: 0;
+		min-inline-size: var(--min, 50%);
+	}
 
-  .noStretch {
-    align-items: flex-start;
-  }
+	.noStretch {
+		align-items: flex-start;
+	}
 </style>

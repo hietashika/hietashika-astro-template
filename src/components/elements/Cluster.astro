@@ -1,97 +1,97 @@
 ---
-import { gapClasses, type GapValue } from "@utils/spacing";
+import { type GapValue, gapClasses } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
-  gap?: GapValue;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
 
-  // 配置
-  align?: "end" | "center";
-  justify?: "end" | "center" | "between" | "around";
-  content?: "end" | "center";
+	// 配置
+	align?: "end" | "center";
+	justify?: "end" | "center" | "between" | "around";
+	content?: "end" | "center";
 
-  // ユーティリティ
-  [key: string]: unknown;
+	// ユーティリティ
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  class: className,
-  gap,
-  align,
-  justify,
-  content,
-  ...rest
+	Element = "div",
+	class: className,
+	gap,
+	align,
+	justify,
+	content,
+	...rest
 } = Astro.props as Props;
 
 const classList = [
-  "cluster",
-  gapClasses(gap),
-  align ? `a--${align}` : "",
-  justify ? `j--${justify}` : "",
-  content ? `c--${content}` : "",
-  className,
+	"cluster",
+	gapClasses(gap),
+	align ? `a--${align}` : "",
+	justify ? `j--${justify}` : "",
+	content ? `c--${content}` : "",
+	className,
 ];
 ---
 
 <Element class:list={classList} {...rest}>
-  <slot />
+	<slot />
 </Element>
 
 <style lang="scss">
-  .cluster {
-    // デフォルト
-    --content: flex-start;
-    --justify: flex-start;
-    --align: flex-start;
-    --row-gap: 0;
-    --column-gap: 0;
+	.cluster {
+		// デフォルト
+		--content: flex-start;
+		--justify: flex-start;
+		--align: flex-start;
+		--row-gap: 0;
+		--column-gap: 0;
 
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--row-gap) var(--column-gap);
-    place-content: var(--content) var(--justify);
-    align-items: var(--align);
-  }
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--row-gap) var(--column-gap);
+		place-content: var(--content) var(--justify);
+		align-items: var(--align);
+	}
 
-  @include sh(rg, cg);
+	@include sh(rg, cg);
 
-  .c {
-    &--end {
-      --content: flex-end;
-    }
+	.c {
+		&--end {
+			--content: flex-end;
+		}
 
-    &--center {
-      --content: center;
-    }
-  }
+		&--center {
+			--content: center;
+		}
+	}
 
-  .a {
-    &--end {
-      --align: flex-end;
-    }
+	.a {
+		&--end {
+			--align: flex-end;
+		}
 
-    &--center {
-      --align: center;
-    }
-  }
+		&--center {
+			--align: center;
+		}
+	}
 
-  .j {
-    &--end {
-      --justify: flex-end;
-    }
+	.j {
+		&--end {
+			--justify: flex-end;
+		}
 
-    &--center {
-      --justify: center;
-    }
+		&--center {
+			--justify: center;
+		}
 
-    &--between {
-      --justify: space-between;
-    }
+		&--between {
+			--justify: space-between;
+		}
 
-    &--around {
-      --justify: space-around;
-    }
-  }
+		&--around {
+			--justify: space-around;
+		}
+	}
 </style>

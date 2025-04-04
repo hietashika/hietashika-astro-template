@@ -1,20 +1,20 @@
 ---
-import { gapClasses, type GapValue } from "@utils/spacing";
+import { type GapValue, gapClasses } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
-  gap?: GapValue;
-  align?: "vertical" | "horizontal";
-  [key: string]: any;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	gap?: GapValue;
+	align?: "vertical" | "horizontal";
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  class: className,
-  align = "vertical",
-  gap,
-  ...rest
+	Element = "div",
+	class: className,
+	align = "vertical",
+	gap,
+	...rest
 } = Astro.props as Props;
 
 // クラスを生成
@@ -22,26 +22,26 @@ const classList = ["stack", align, gapClasses(gap), className];
 ---
 
 <Element class:list={classList} {...rest}>
-  <slot />
+	<slot />
 </Element>
 
 <style lang="scss">
-  .stack {
-    // デフォルト
-    --gap: 0;
+	.stack {
+		// デフォルト
+		--gap: 0;
 
-    display: grid;
-    gap: var(--gap);
-  }
+		display: grid;
+		gap: var(--gap);
+	}
 
-  @include spacing(g, gap);
+	@include spacing(g, gap);
 
-  .vertical {
-    align-content: start;
-  }
+	.vertical {
+		align-content: start;
+	}
 
-  .horizontal {
-    grid-auto-flow: column;
-    justify-content: start;
-  }
+	.horizontal {
+		grid-auto-flow: column;
+		justify-content: start;
+	}
 </style>

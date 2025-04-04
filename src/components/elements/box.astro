@@ -1,73 +1,73 @@
 ---
-import { paddingClasses, type PaddingValue } from "@utils/spacing";
+import { type PaddingValue, paddingClasses } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
 
-  // 配置
-  surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
-  padding?: PaddingValue;
+	// 配置
+	surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent";
+	padding?: PaddingValue;
 
-  // ユーティリティ
-  [key: string]: unknown;
+	// ユーティリティ
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  class: className,
-  padding,
-  surface = "primary",
-  ...rest
+	Element = "div",
+	class: className,
+	padding,
+	surface = "primary",
+	...rest
 } = Astro.props as Props;
 
 const classList = ["box", `${surface}`, paddingClasses(padding), className];
 ---
 
 <Element class:list={classList} {...rest}>
-  <slot />
+	<slot />
 </Element>
 
 <style lang="scss">
-  .box {
-    // デフォルト
-    --color: var(--color-text-high);
-    --pt: var(--space-0);
-    --pr: var(--space-0);
-    --pb: var(--space-0);
-    --pl: var(--space-0);
+	.box {
+		// デフォルト
+		--color: var(--color-text-high);
+		--pt: var(--space-0);
+		--pr: var(--space-0);
+		--pb: var(--space-0);
+		--pl: var(--space-0);
 
-    padding: var(--pt) var(--pr) var(--pb) var(--pl);
-    background: var(--background);
-    color: var(--color);
-    outline: 0.125rem solid transparent;
-    outline-offset: -0.125rem;
+		padding: var(--pt) var(--pr) var(--pb) var(--pl);
+		background: var(--background);
+		color: var(--color);
+		outline: 0.125rem solid transparent;
+		outline-offset: -0.125rem;
 
-    > :global(*) {
-      color: inherit;
-    }
-  }
+		> :global(*) {
+			color: inherit;
+		}
+	}
 
-  @include sh(p);
+	@include sh(p);
 
-  .primary {
-    --background: var(--color-background-primary);
-  }
+	.primary {
+		--background: var(--color-background-primary);
+	}
 
-  .secondary {
-    --background: var(--color-background-secondary);
-  }
+	.secondary {
+		--background: var(--color-background-secondary);
+	}
 
-  .tertiary {
-    --background: var(--color-background-tertiary);
-  }
+	.tertiary {
+		--background: var(--color-background-tertiary);
+	}
 
-  .quaternary {
-    --background: var(--color-background-quaternary);
-  }
+	.quaternary {
+		--background: var(--color-background-quaternary);
+	}
 
-  .accent {
-    --background: var(--color-background-accent);
-    --color: var(--color-text-primary);
-  }
+	.accent {
+		--background: var(--color-background-accent);
+		--color: var(--color-text-primary);
+	}
 </style>

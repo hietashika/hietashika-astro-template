@@ -1,47 +1,47 @@
 ---
 import {
-  paddingClasses,
-  gapClasses,
-  type PaddingValue,
-  type GapValue,
+	type GapValue,
+	type PaddingValue,
+	gapClasses,
+	paddingClasses,
 } from "@utils/spacing";
 
 interface Props {
-  Element?: keyof HTMLElementTagNameMap;
-  class?: string;
-  padding?: PaddingValue;
-  gap?: GapValue;
-  minHeight?: number;
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	padding?: PaddingValue;
+	gap?: GapValue;
+	minHeight?: number;
 
-  // ユーティリティ
-  [key: string]: unknown;
+	// ユーティリティ
+	[key: string]: unknown;
 }
 
 const {
-  Element = "div",
-  class: className,
-  padding,
-  gap,
-  minHeight,
-  ...rest
+	Element = "div",
+	class: className,
+	padding,
+	gap,
+	minHeight,
+	...rest
 } = Astro.props as Props;
 
 const classList = [
-  "cover",
-  paddingClasses(padding),
-  gapClasses(gap),
-  ...(minHeight ? [`minHeight--${minHeight}`] : []),
-  className,
+	"cover",
+	paddingClasses(padding),
+	gapClasses(gap),
+	...(minHeight ? [`minHeight--${minHeight}`] : []),
+	className,
 ];
 
 // スロットの中身を確認するためのヘルパー関数
 const hasSlotContent = (slotName: string | null) => {
-  // デフォルトスロット
-  if (slotName === null) {
-    return Astro.slots.has("default");
-  }
-  // 名前付きスロット
-  return Astro.slots.has(slotName);
+	// デフォルトスロット
+	if (slotName === null) {
+		return Astro.slots.has("default");
+	}
+	// 名前付きスロット
+	return Astro.slots.has(slotName);
 };
 
 // スロットの中身を確認
@@ -51,61 +51,61 @@ const hasBottomSlot = hasSlotContent("bottom");
 ---
 
 <Element class:list={classList} {...rest}>
-  {
-    hasTopSlot && (
-      <div data-slot="top">
-        <slot name="top" />
-      </div>
-    )
-  }
-  {
-    hasDefaultSlot && (
-      <div data-slot="center">
-        <slot />
-      </div>
-    )
-  }
-  {
-    hasBottomSlot && (
-      <div data-slot="bottom">
-        <slot name="bottom" />
-      </div>
-    )
-  }
+	{
+		hasTopSlot && (
+			<div data-slot="top">
+				<slot name="top" />
+			</div>
+		)
+	}
+	{
+		hasDefaultSlot && (
+			<div data-slot="center">
+				<slot />
+			</div>
+		)
+	}
+	{
+		hasBottomSlot && (
+			<div data-slot="bottom">
+				<slot name="bottom" />
+			</div>
+		)
+	}
 </Element>
 
 <style lang="scss">
-  .cover {
-    // デフォルト
-    --pt: 0;
-    --pr: 0;
-    --pb: 0;
-    --pl: 0;
-    --gap: var(--space-2);
-    --min-height: attr(data-height type(<length>), 100dvh);
+	.cover {
+		// デフォルト
+		--pt: 0;
+		--pr: 0;
+		--pb: 0;
+		--pl: 0;
+		--gap: var(--space-2);
+		--min-height: attr(data-height type(<length>), 100dvh);
 
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap);
-    min-block-size: var(--min-height);
-    padding: var(--pt) var(--pr) var(--pb) var(--pl);
-  }
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+		min-block-size: var(--min-height);
+		padding: var(--pt) var(--pr) var(--pb) var(--pl);
+	}
 
-  @include spacing(g);
-  @include sh(p);
+	@include spacing(g);
+	@include sh(p);
 
-  /* centerスロットのラッパーは上下マージンをautoに */
-  [data-slot="center"] {
-    margin-block: auto;
-  }
+	/* centerスロットのラッパーは上下マージンをautoに */
+	[data-slot="center"] {
+		margin-block: auto;
+	}
 
-  /* topスロットのラッパーは上マージンを0に */
-  [data-slot="top"] {
-    margin-block-start: 0;
-  }
+	/* topスロットのラッパーは上マージンを0に */
+	[data-slot="top"] {
+		margin-block-start: 0;
+	}
 
-  /* bottomスロットのラッパーは下マージンを0に */
-  [data-slot="bottom"] {
-    margin-block-end: 0;
-  }
+	/* bottomスロットのラッパーは下マージンを0に */
+	[data-slot="bottom"] {
+		margin-block-end: 0;
+	}
 </style>
