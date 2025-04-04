@@ -21,4 +21,5 @@ export default {
 	singleQuote: false,
 	trailingComma: "all",
 	printWidth: 80,
+	endOfLine: "crlf",
 };
