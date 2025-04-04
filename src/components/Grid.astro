@@ -47,7 +47,10 @@ const props = {
 
 	@supports (inline-size: min(var(--min, 250px), 100%)) {
 		.grid {
-			grid-template-columns: repeat(auto-fit, minmax(min(var(--min, 250px), 100%), 1fr));
+			grid-template-columns: repeat(
+				auto-fit,
+				minmax(min(var(--min, 250px), 100%), 1fr)
+			);
 		}
 	}
 </style>
