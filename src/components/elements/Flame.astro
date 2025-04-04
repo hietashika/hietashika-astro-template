@@ -1,0 +1,49 @@
+---
+interface Props {
+	Element?: keyof HTMLElementTagNameMap;
+	class?: string;
+	ratio?: string;
+
+	// ユーティリティ
+	[key: string]: unknown;
+}
+
+const {
+	Element = "div",
+	class: className,
+	ratio,
+	...rest
+} = Astro.props as Props;
+
+const classList = ["flame", className];
+
+const arrayRatio = ratio ? ratio.split("/").map(Number) : [null, null];
+
+const props = {
+	...rest,
+	"data-n": arrayRatio[0],
+	"data-d": arrayRatio[1],
+};
+---
+
+<Element class:list={classList} {...props}>
+	<slot />
+</Element>
+
+<style lang="scss">
+	.flame {
+		// デフォルト
+		--n: attr(data-n type(<number>), 16);
+		--d: attr(data-d type(<number>), 9);
+
+		position: relative;
+		aspect-ratio: calc(var(--n) / var(--d));
+
+		> :global(img),
+		> :global(video) {
+			inline-size: 100%;
+			block-size: 100%;
+			object-fit: cover;
+		}
+	}
+</style>

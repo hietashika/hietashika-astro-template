@@ -14,6 +14,7 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
 
 // 見出し
 h1, h2, h3, h4, h5, h6 {
+	line-height: 1.5;
   text-wrap: pretty;
   word-break: auto-phrase;
 }
@@ -23,7 +24,6 @@ h1 {
 
   // 24px 〜 36px
   font-size: clamp-size(var(--font-size-2xl), var(--font-size-4xl));
-  line-height: 1.5;
 }
 
 h2 {
@@ -32,7 +32,6 @@ h2 {
   // 20px 〜 24px
   font-size: clamp-size(var(--font-size-l), var(--font-size-2xl));
   font-weight: bold;
-  line-height: 1.5;
 }
 
 h3 {
@@ -41,8 +40,6 @@ h3 {
   // 18px 〜 20px
   font-size: clamp-size(var(--font-size-m), var(--font-size-l));
   font-weight: bold;
-  line-height: 1.5;
-
 }
 
 h4 {
@@ -51,7 +48,6 @@ h4 {
   // 16px 〜 18px
   font-size: clamp-size(var(--font-size-m), var(--font-size-l));
   font-weight: bold;
-  line-height: 1.5;
 }
 
 // テキスト
