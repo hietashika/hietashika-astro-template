@@ -34,25 +34,25 @@ export const paddingClasses = (paddingValue: PaddingValue): string => {
 	if (values.length === 1) {
 		// 1つの値: すべての方向に同じ値を適用
 		const value = values[0];
-		return `pt--${value} pr--${value} pb--${value} pl--${value}`;
+		return `pt:${value} pr:${value} pb:${value} pl:${value}`;
 	}
 
 	if (values.length === 2) {
 		// 2つの値: 上下、左右
 		const [vertical, horizontal] = values;
-		return `pt--${vertical} pr--${horizontal} pb--${vertical} pl--${horizontal}`;
+		return `pt:${vertical} pr:${horizontal} pb:${vertical} pl:${horizontal}`;
 	}
 
 	if (values.length === 3) {
 		// 3つの値: 上、左右、下
 		const [top, horizontal, bottom] = values;
-		return `pt--${top} pr--${horizontal} pb--${bottom} pl--${horizontal}`;
+		return `pt:${top} pr:${horizontal} pb:${bottom} pl:${horizontal}`;
 	}
 
 	if (values.length === 4) {
 		// 4つの値: 上、右、下、左
 		const [top, right, bottom, left] = values;
-		return `pt--${top} pr--${right} pb--${bottom} pl--${left}`;
+		return `pt:${top} pr:${right} pb:${bottom} pl:${left}`;
 	}
 
 	// デフォルト（不正な値の場合）
@@ -77,7 +77,7 @@ export const paddingInlineClasses = (paddingValue: PaddingValue): string => {
 	if (values.length === 1) {
 		// 1つの値: すべての方向に同じ値を適用
 		const value = values[0];
-		return `pi--${value}`;
+		return `pi:${value}`;
 	}
 
 	// デフォルト（不正な値の場合）
@@ -101,13 +101,13 @@ export const gapClasses = (gapValue: GapValue): string => {
 	// 値の数に応じて異なる処理を実行
 	if (value.length === 1) {
 		// 1つの値を適用
-		return `g--${value}`;
+		return `g:${value}`;
 	}
 
 	if (value.length === 2) {
 		// 2つの値を適用
 		const [row, column] = value;
-		return `rg--${row} cg--${column}`;
+		return `rg:${row} cg:${column}`;
 	}
 
 	// デフォルト（不正な値の場合）

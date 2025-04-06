@@ -43,8 +43,6 @@ const props = {
 		grid-gap: var(--row-gap) var(--column-gap);
 	}
 
-	@include sh(rg, cg);
-
 	@supports (inline-size: min(var(--min, 250px), 100%)) {
 		.grid {
 			grid-template-columns: repeat(

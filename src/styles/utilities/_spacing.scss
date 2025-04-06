@@ -1,0 +1,26 @@
+
+// ユーティリティクラスを生成
+@mixin spacing-utility($prefix, $property: $prefix) {
+  @for $i from 0 through 8 {
+    .#{$prefix}\:#{$i} {
+      --#{$property}: var(--space-#{$i}) !important;
+    }
+  }
+}
+
+// ショートハンドのユーティリティクラスを生成
+@mixin shorthand($prefix, $prefix2: null) {
+  @if $prefix2 {
+    @include spacing-utility($prefix2, row-gap);
+    @include spacing-utility($prefix2, column-gap);
+  } @else {
+    @each $direction in ("t", "r", "b", "l") {
+      @include spacing-utility("#{$prefix}#{$direction}");
+    }
+  }
+}
+
+@include spacing-utility("g", "gap");
+@include shorthand("p");
+@include shorthand("m");
+@include shorthand("rg", "cg");

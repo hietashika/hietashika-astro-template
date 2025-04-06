@@ -10,6 +10,9 @@
 // ベーススタイルの読み込み
 @import "./elements/_base.scss" layer(elements);
 
+// ユーティリティスタイルの読み込み
+@import "./utilities/_spacing.scss" layer(utilities);
+
 // コンポーネントスタイルの読み込み
 // @import "./components/_buttons.scss" layer(components);
 // @import "./components/_cards.scss" layer(components);
