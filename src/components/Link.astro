@@ -1,0 +1,69 @@
+---
+import { type GapValue, gapClasses } from "@utils/spacing";
+import { Icon } from "astro-icon/components";
+import Box from "@elements/Box.astro";
+
+interface Props {
+	class?: string;
+	href: string;
+	icon?: string;
+	gap?: GapValue;
+	align?: "horizontal" | "vertical";
+
+	// ユーティリティ
+	[key: string]: unknown;
+}
+
+const {
+	href,
+	icon = "dummy",
+	gap,
+	align = "horizontal",
+	class: className,
+	...rest
+} = Astro.props as Props;
+};
+
+const classList = [
+	"link",
+	gapClasses(gap),
+	align === "vertical" ? "vertical" : "horizontal",
+	className,
+];
+---
+
+<Box Element="a" href={href} class:list={classList} padding="2 3" {...rest}>
+	<Icon name={icon} />
+	<slot> Text </slot>
+</Box>
+
+<style lang="scss">
+	.link {
+		display: grid;
+		align-items: center;
+		grid-gap: var(--gap);
+	}
+</style>
+
+<style lang="scss">
+	.link {
+		display: grid;
+	}
+
+	.vertical {
+		// デフォルト
+		--gap: var(--space-1);
+
+		justify-items: center;
+	}
+
+	.horizontal {
+		// デフォルト
+		--gap: var(--space-3);
+
+		grid-template-columns: auto 1fr;
+		grid-auto-flow: column;
+		grid-gap: var(--gap);
+		align-items: center;
+	}
+</style>
