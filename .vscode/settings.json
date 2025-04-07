@@ -23,7 +23,13 @@
 	"[astro]": {
 		"editor.defaultFormatter": "astro-build.astro-vscode"
 	},
-
+	//prettierの設定
+	"prettier.documentSelectors": [
+		"**/*.astro",
+		"**/*.css",
+		"**/*.scss",
+		"**/*.html"
+	],
 	// Task Explorer設定
 	"taskExplorer.enabledTasks": {
 		"npm": true,
@@ -96,5 +102,8 @@
 	"eslint.lintTask.enable": true,
 	"eslint.lintTask.options": "npx stylelint \"**/*.{css,scss,html,astro}\" --fix",
 	"taskExplorer.enableSideBar": true,
-	"workbench.editor.enablePreview": true
+	"workbench.editor.enablePreview": true,
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
 }

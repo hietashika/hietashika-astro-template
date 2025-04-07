@@ -1,5 +1,3 @@
-import { error } from "node_modules/astro/dist/core/logger/core";
-
 /**
  * パディング値の型定義
  */
