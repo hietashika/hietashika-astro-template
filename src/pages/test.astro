@@ -54,6 +54,12 @@ import Switcher from "@elements/Switcher.astro";
 	<Icon gap="3" name="dummy" label="test">
 		<span>test</span>
 	</Icon>
-	<Link href="/" icon="dummy"> test </Link>
-	<Link href="/" icon="dummy" gap="1" align="vertical"> test </Link>
+	<Link href="/"> test </Link>
+	<Switcher>
+		<Link href="/" size="small" surface="primary" icon="dummy" gap="2"> test </Link>
+		<Link href="/" size="medium" surface="secondary" icon="dummy" gap="2"> test </Link>
+		<Link href="/" size="large" surface="tertiary" icon="dummy" gap="2"> test </Link>
+	</Switcher>
+	<Link href="/" gap="1" align="vertical" surface="secondary"> test </Link>
+	<Link href="/" icon="dummy" gap="1" align="vertical" surface="secondary"> test </Link>
 </Layout>

@@ -9,45 +9,98 @@ interface Props {
 	icon?: string;
 	gap?: GapValue;
 	align?: "horizontal" | "vertical";
+	surface?: "primary" | "secondary" | "tertiary" ;
+	size?: "small" | "medium" | "large";
 
 	// ユーティリティ
 	[key: string]: unknown;
 }
 
 const {
+	class: className,
 	href,
-	icon = "dummy",
+	icon,
 	gap,
 	align = "horizontal",
-	class: className,
+	surface = "tertiary",
+	size = "medium",
 	...rest
 } = Astro.props as Props;
+
+
+const convertSurface = (surface: Props["surface"]) => {
+	switch (surface) {
+		case "primary":
+			return "accent";
+		case "secondary":
+			return "outlined";
+		case "tertiary":
+			return undefined;
+		default:
+			return surface;
+	}
 };
 
 const classList = [
 	"link",
 	gapClasses(gap),
 	align === "vertical" ? "vertical" : "horizontal",
+	size,
 	className,
 ];
 ---
 
-<Box Element="a" href={href} class:list={classList} padding="2 3" {...rest}>
-	<Icon name={icon} />
+<Box Element="a" href={href} class:list={classList} surface={convertSurface(surface)} {...rest}>
+	{icon && <Icon name={icon}  />}
 	<slot> Text </slot>
 </Box>
 
-<style lang="scss">
-	.link {
-		display: grid;
-		align-items: center;
-		grid-gap: var(--gap);
-	}
-</style>
 
 <style lang="scss">
 	.link {
 		display: grid;
+		grid-gap: var(--gap);
+		border-radius: var(--border-radius);
+
+		// tertiary のホバー時
+		&:hover {
+			--background: var(--color-hover-neutral);
+			--color: var(--color-text-middle);
+		}
+	}
+
+	// primary のホバー時の背景色
+	.accent {
+		&:hover {
+			--background: var(--color-hover-neutral);
+		}
+	}
+
+	// secondary のホバー時の背景色
+	.outlined {
+		&:hover {
+			--background: var(--color-hover-outlined);
+		}
+	}
+
+	.small {
+		padding: var(--space-1) var(--space-2);
+		font-size: rem(var(--font-size-s));
+	}
+
+	.medium {
+		padding: var(--space-2) var(--space-3);
+		font-size: rem(var(--font-size-m));
+	}
+
+	.large {
+		padding: var(--space-2) var(--space-4);
+		font-size: rem(var(--font-size-xl));
+	}
+
+	.icon {
+		width: 1cap;
+		height: 1cap;
 	}
 
 	.vertical {
@@ -63,7 +116,6 @@ const classList = [
 
 		grid-template-columns: auto 1fr;
 		grid-auto-flow: column;
-		grid-gap: var(--gap);
 		align-items: center;
 	}
 </style>

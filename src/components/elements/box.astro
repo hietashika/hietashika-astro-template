@@ -6,7 +6,7 @@ interface Props {
 	class?: string;
 
 	// 配置
-	surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent" | "transparent" | "outlined";
+	surface?: "primary" | "secondary" | "tertiary" | "quaternary" | "accent" | "outlined";
 	padding?: PaddingValue;
 
 	// ユーティリティ
@@ -33,17 +33,17 @@ const classList = ["box", surface ? `${surface}` : "", paddingClasses(padding), 
 		// デフォルト
 		--background: var(--color-background-transparent);
 		--color: var(--color-text-middle);
+		--border: transparent;
 		--pt: var(--space-0);
 		--pr: var(--space-0);
 		--pb: var(--space-0);
 		--pl: var(--space-0);
-		--border-color: transparent;
 
 		padding: var(--pt) var(--pr) var(--pb) var(--pl);
 		background: var(--background);
 		color: var(--color);
-		outline: 0.125rem solid var(--color-border);
-		outline-offset: -0.125rem;
+		outline: var(--border-width) solid var(--border);
+		outline-offset: calc(var(--border-width) * -1);
 
 		> :global(*) {
 			color: inherit;
@@ -72,13 +72,10 @@ const classList = ["box", surface ? `${surface}` : "", paddingClasses(padding), 
 		--color: var(--color-text-primary);
 	}
 
-	.transparent {
-		--background: var(--color-background-transparent);
-	}
-
 	.outlined {
-		--background: var(--color-background-transparent);
-		--border-color: var(--color-border-low);
+		--background: var(--color-background-primary);
+		--border: var(--color-border-low);
 		--color: var(--color-text-middle);
+
 	}
 </style>
