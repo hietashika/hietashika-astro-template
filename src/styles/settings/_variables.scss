@@ -76,6 +76,7 @@ $white-005: rgb(255 255 255 / 5%);
 // カスタムプロパティの設定
 :root {
 	// Color
+	--color: var(--color-text-high);
 	--color-primary: #{$primary-080};
 	--color-secondary: #{$secondary-060};
 
@@ -144,6 +145,10 @@ $white-005: rgb(255 255 255 / 5%);
 
 	// 行間の調整
 	--leading-trim: calc((1em - 1lh) / 2);
+
+	// ボーダー
+	--border-radius: var(--space-1);
+	--border-width: calc(1 / 16 * 1rem);
 
 	// 余白の基本単位
 	--space-base: 1rem; // 16px - 基準サイズ
