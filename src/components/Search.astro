@@ -1,0 +1,73 @@
+---
+import Box from "@elements/Box.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	inIcon?: boolean;
+}
+
+const { inIcon = false, ...rest }: Props = Astro.props;
+
+const classList = ["search", inIcon ? "inIcon" : ""];
+---
+
+<form class:list={classList} {...rest}>
+	<label for="search" class="label">検索</label>
+	<input type="text" id="search" placeholder="検索" class="input" />
+	<Box Element="button" type="submit" surface={inIcon ? undefined : "accent"} aria-label="検索" class="button">
+		<Icon name="Zoom" />
+	</Box>
+	<p>test</p>
+</form>
+
+<style lang="scss">
+	.search {
+		// デフォルト
+		--font-size: #{clamp-size(var(--font-size-xs), var(--font-size-s))};
+
+		display: grid;
+		grid-template-columns: 1fr auto;
+		grid-gap: var(--space-2);
+		align-items: center;
+
+		> :global(*) {
+			border-radius: var(--border-radius);
+		}
+	}
+
+	.inIcon {
+		grid-template-columns: auto 1fr;
+
+		> :global(.button) {
+			--color: var(--color-text-low);
+
+			grid-column: 1;
+			grid-row: 1;
+		}
+
+		> :global(.input) {
+			grid-column: 1 / -1;
+			grid-row: 1;
+			padding-inline-start: calc(var(--font-size) + var(--space-7));
+		}
+	}
+
+	.label {
+		display: none;
+	}
+
+	.input {
+		padding: var(--space-2) var(--space-3);
+
+		&::placeholder {
+			font-size: var(--font-size);
+		}
+	}
+
+	.button {
+		display: block grid;
+		place-items: center;
+		aspect-ratio: 1;
+	}
+
+</style>
