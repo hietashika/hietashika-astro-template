@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 import Box from "@elements/Box.astro";
 
 interface Props {
+	Element?: keyof HTMLElementTagNameMap;
 	class?: string;
 	href: string;
 	icon?: string;
@@ -18,6 +19,7 @@ interface Props {
 
 const {
 	class: className,
+	Element = "a",
 	href,
 	icon,
 	gap,
@@ -50,9 +52,9 @@ const classList = [
 ];
 ---
 
-<Box Element="a" href={href} class:list={classList} surface={convertSurface(surface)} {...rest}>
+<Box Element={Element} href={href} class:list={classList} surface={convertSurface(surface)} {...rest}>
 	{icon && <Icon name={icon}  />}
-	<slot> Text </slot>
+	<slot />
 </Box>
 
 
@@ -85,22 +87,17 @@ const classList = [
 
 	.small {
 		padding: var(--space-1) var(--space-2);
-		font-size: rem(var(--font-size-s));
+		font-size: clamp-size(var(--font-size-xs), var(--font-size-s));
 	}
 
 	.medium {
 		padding: var(--space-2) var(--space-3);
-		font-size: rem(var(--font-size-m));
+		font-size: clamp-size(var(--font-size-s), var(--font-size-m));
 	}
 
 	.large {
 		padding: var(--space-2) var(--space-4);
-		font-size: rem(var(--font-size-xl));
-	}
-
-	.icon {
-		width: 1cap;
-		height: 1cap;
+		font-size: clamp-size(var(--font-size-l), var(--font-size-xl));
 	}
 
 	.vertical {

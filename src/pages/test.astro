@@ -11,6 +11,7 @@ import Icon from "@elements/Icons.astro";
 import Sidebar from "@elements/Sidebar.astro";
 import Stack from "@elements/Stack.astro";
 import Switcher from "@elements/Switcher.astro";
+import Search from "@components/Search.astro";
 ---
 
 <Layout pageTitle="Test">
@@ -51,15 +52,16 @@ import Switcher from "@elements/Switcher.astro";
 	<Flame>
 		<img src="https://placehold.jp/2400x900.png" alt="test" />
 	</Flame>
-	<Icon gap="3" name="dummy" label="test">
+	<Icon gap="3" name="Text" label="test">
 		<span>test</span>
 	</Icon>
 	<Link href="/"> test </Link>
 	<Switcher>
-		<Link href="/" size="small" surface="primary" icon="dummy" gap="2"> test </Link>
-		<Link href="/" size="medium" surface="secondary" icon="dummy" gap="2"> test </Link>
-		<Link href="/" size="large" surface="tertiary" icon="dummy" gap="2"> test </Link>
+		<Link href="/" size="small" surface="primary" icon="Text" gap="2">test</Link>
+		<Link href="/" size="medium" surface="secondary" icon="Text" gap="2">test</Link>
+		<Link href="/" size="large" surface="tertiary" icon="Text" gap="2">test</Link>
 	</Switcher>
 	<Link href="/" gap="1" align="vertical" surface="secondary"> test </Link>
-	<Link href="/" icon="dummy" gap="1" align="vertical" surface="secondary"> test </Link>
+	<Link href="/" icon="Text" gap="1" align="vertical" surface="tertiary"></Link>
+	<Search inIcon />
 </Layout>
